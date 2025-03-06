@@ -1,0 +1,16 @@
+name: py13roboticscourse
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.13
+  - numpy
+  - pinocchio=3.4
+  - casadi
+  - meshcat-python
+  - example-robot-data
+  - jupyter
+  - ipywidgets
+  - matplotlib
+  - pip
+  - pandas
