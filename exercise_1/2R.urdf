@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<robot name="2R robot arm">
+
+  <!-- Link 1 (Base to Joint 1) -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="0.1 0.1 0.1"/>
+      </geometry>
+      <material name="grey"/>
+    </visual>
+  </link>
+
+  <!-- Link 2 (Joint 1 to Joint 2) -->
+  <link name="link_1">
+    <visual>
+      <geometry>
+        <cylinder radius="0.05" length="1.0"/>
+      </geometry>
+      <origin xyz="0.5 0 0" rpy="0 1.57 0"/>
+      <material name="grey"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="0.05" length="1.0"/>
+      </geometry>
+      <origin xyz="0.5 0 0" rpy="0 1.57 0"/>
+    </collision>
+    <inertial>
+      <mass value="0.0"/>
+      <origin xyz="0.5 0 0" rpy="0 1.57 0"/>
+      <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+    </inertial>
+  </link>
+
+  <!-- Link 3 (Joint 2 to End Effector) -->
+  <link name="link_2">
+    <visual>
+      <geometry>
+        <cylinder radius="0.05" length="1.0"/>
+      </geometry>
+      <origin xyz="0.5 0 0" rpy="0 1.57 0"/>
+      <material name="grey"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="0.05" length="1.0"/>
+      </geometry>
+      <origin xyz="0.5 0 0" rpy="0 1.57 0"/>
+    </collision>
+    <inertial>
+      <mass value="0.0"/>
+      <origin xyz="0.5 0 0" />
+      <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+    </inertial>
+  </link>
+
+  <!-- Point mass at joint 2 -->
+  <link name="point_mass_1">
+    <visual>
+      <geometry>
+        <sphere radius="0.05"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+    <inertial>
+      <mass value="1.0"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+    </inertial>
+  </link>
+
+  <!-- Point mass at end effector -->
+  <link name="point_mass_2">
+    <visual>
+      <geometry>
+        <sphere radius="0.05"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+    <inertial>
+      <mass value="1.0"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+    </inertial>
+  </link>
+
+  <!-- Joint 1 (Base to Joint 1) -->
+  <joint name="joint_1" type="revolute">
+    <parent link="base_link"/>
+    <child link="link_1"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="0 0 0"/>
+    <limit lower="-2.0" upper="2.0" effort="100" velocity="1"/>
+  </joint>
+
+  <!-- Joint 2 (Joint 1 to Joint 2) -->
+  <joint name="joint_2" type="revolute">
+    <parent link="link_1"/>
+    <child link="link_2"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="1 0 0"/>
+    <limit lower="-2.0" upper="2.0" effort="100" velocity="1"/>
+  </joint>
+
+  <!-- Joint between joint 2 and point mass 1 -->
+  <joint name="joint_3" type="fixed">
+    <parent link="link_2"/>
+    <child link="point_mass_1"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+
+  <!-- Joint between point mass 2 and end effector -->
+  <joint name="joint_4" type="fixed">
+    <parent link="link_2"/>
+    <child link="point_mass_2"/>
+    <origin xyz="1 0 0"/>
+  </joint>
+
+</robot>
